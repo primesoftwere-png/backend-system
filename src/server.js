@@ -10,6 +10,7 @@ import connectDB from './config/db.js';
 import healthRoutes from './routes/health.js';
 import businessRoutes from './routes/business.js';
 import campaignRoutes from './routes/campaign.js';
+import { rescheduleEmailCampaigns } from './controllers/campaignController.js';
 import authRoutes from './routes/auth.js';
 import inquiryRoutes from './routes/inquiry.js';
 import chatRoutes from './routes/chat.js';
@@ -66,4 +67,7 @@ const BACKEND_URL = process.env.BACKEND_URL || `http://localhost:${PORT}`;
 app.listen(PORT, () => {
   console.log(`Server is running at ${BACKEND_URL}`);
   console.log(`Health check API is available at ${BACKEND_URL}/api/health`);
+
+  // Re-schedule any pending email campaigns that have a future sendingDateTime
+  rescheduleEmailCampaigns();
 });

@@ -2,16 +2,11 @@ import mongoose from 'mongoose';
 
 const campaignSchema = new mongoose.Schema(
   {
-    for: {
-      type: String,
-      enum: ['email', 'mobile_no'],
-      required: true,
-    },
-    numberOfSendingMessage: {
-      type: Number,
-      default: 0,
-    },
     issues: {
+      type: String,
+      trim: true,
+    },
+    campaignName: {
       type: String,
       trim: true,
     },
@@ -27,18 +22,39 @@ const campaignSchema = new mongoose.Schema(
     sendingDateTime: {
       type: Date, // Scheduled time and date for the campaign to be sent
     },
-    businessRef: {
+    businessRef: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Business',
-      required: true, // Requires a valid business ID to be passed
-    },
-    messageTitle: {
+      required: true,
+    }],
+    message: {
       type: String,
       trim: true,
     },
-    messageBody: {
+    emailSubject: {
       type: String,
       trim: true,
+    },
+    emailBody: {
+      type: String,
+      trim: true,
+    },
+    emailStatus: {
+      type: String,
+      enum: ['pending', 'sending', 'completed', 'failed'],
+      default: 'pending',
+    },
+    emailSentCount: {
+      type: Number,
+      default: 0,
+    },
+    emailTotalCount: {
+      type: Number,
+      default: 0,
+    },
+    emailCronScheduled: {
+      type: Boolean,
+      default: false,
     },
   },
   {

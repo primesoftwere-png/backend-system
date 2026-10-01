@@ -21,8 +21,10 @@
     "hpp": "^0.2.3",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.9.2",
+    "multer": "^2.4.0",
     "node-schedule": "^2.1.1",
     "nodemailer": "^9.0.5",
+    "xlsx": "^0.18.5",
     "xss-clean": "^0.1.4"
   }
 }

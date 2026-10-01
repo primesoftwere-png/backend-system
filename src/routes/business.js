@@ -1,4 +1,5 @@
 import express from 'express';
+import multer from 'multer';
 import {
   createBusiness,
   getBusinesses,
@@ -8,9 +9,22 @@ import {
   getNiches,
   getCities,
   getCountries,
+  importBusinesses,
+  downloadImportTemplate,
+  sendWhatsapp,
 } from '../controllers/businessController.js';
 
 const router = express.Router();
+
+const upload = multer({ storage: multer.memoryStorage() });
+
+// Routes for /api/businesses/import/template
+router.route('/import/template')
+  .get(downloadImportTemplate);
+
+// Routes for /api/businesses/import
+router.route('/import')
+  .post(upload.single('file'), importBusinesses);
 
 // Routes for /api/businesses/niches
 router.route('/niches')
@@ -28,6 +42,10 @@ router.route('/countries')
 router.route('/')
   .post(createBusiness)
   .get(getBusinesses);
+
+// Routes for /api/businesses/send-whatsapp
+router.route('/send-whatsapp')
+  .post(sendWhatsapp);
 
 // Routes for /api/businesses/:id
 router.route('/:id')
